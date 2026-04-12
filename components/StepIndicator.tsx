@@ -14,14 +14,15 @@ export default function StepIndicator({
   labels,
 }: StepIndicatorProps) {
   return (
-    <div className="w-full mb-8">
-      {/* Steps dots + line */}
-      <div className="flex items-center justify-between relative">
+    <div className="w-full mb-7 sm:mb-8">
+      {/* Steps row */}
+      <div className="flex items-center justify-between relative px-1">
         {/* Background line */}
-        <div className="absolute top-4 left-0 right-0 h-0.5 bg-navy-light z-0" />
+        <div className="absolute top-[13px] xs:top-[15px] sm:top-4 left-0 right-0 h-0.5 bg-navy-dark z-0" />
+
         {/* Progress line */}
         <motion.div
-          className="absolute top-4 left-0 h-0.5 bg-orange z-0"
+          className="absolute top-[13px] xs:top-[15px] sm:top-4 left-0 h-0.5 bg-orange z-0"
           initial={{ width: "0%" }}
           animate={{
             width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%`,
@@ -52,12 +53,14 @@ export default function StepIndicator({
                     : "#94A3B8",
                 }}
                 transition={{ duration: 0.3 }}
-                className="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-bold"
-                style={{ color: isActive || isCompleted ? "#1B2A5C" : "#94A3B8" }}
+                className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 rounded-full border-2 flex items-center justify-center text-[10px] xs:text-xs font-bold flex-shrink-0"
+                style={{
+                  color: isActive || isCompleted ? "#1B2A5C" : "#94A3B8",
+                }}
               >
                 {isCompleted ? (
                   <svg
-                    className="w-4 h-4"
+                    className="w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -73,14 +76,17 @@ export default function StepIndicator({
                   step
                 )}
               </motion.div>
+
+              {/* Label — hidden on mobile, shown from sm */}
               <span
-                className={`mt-2 text-[10px] font-medium text-center hidden sm:block max-w-[70px] leading-tight ${
-                  isActive
-                    ? "text-orange"
-                    : isCompleted
-                    ? "text-green-serma"
-                    : "text-muted"
-                }`}
+                className={`mt-1.5 text-[9px] sm:text-[10px] font-medium text-center hidden sm:block w-[60px] sm:w-[68px] leading-tight truncate
+                  ${
+                    isActive
+                      ? "text-orange"
+                      : isCompleted
+                      ? "text-green-serma"
+                      : "text-muted"
+                  }`}
               >
                 {labels[i]}
               </span>
@@ -89,10 +95,10 @@ export default function StepIndicator({
         })}
       </div>
 
-      {/* Mobile: current step label */}
+      {/* Mobile current step label */}
       <div className="mt-3 sm:hidden text-center">
-        <span className="text-orange text-sm font-semibold">
-          Étape {currentStep} / {totalSteps} — {labels[currentStep - 1]}
+        <span className="text-orange text-xs xs:text-sm font-semibold">
+          Étape {currentStep}/{totalSteps} — {labels[currentStep - 1]}
         </span>
       </div>
     </div>

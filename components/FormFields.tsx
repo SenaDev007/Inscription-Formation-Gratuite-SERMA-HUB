@@ -3,7 +3,7 @@
 import { InputHTMLAttributes, TextareaHTMLAttributes, forwardRef } from "react";
 
 interface LabelProps {
-  htmlFor: string;
+  htmlFor?: string;
   children: React.ReactNode;
   required?: boolean;
 }
@@ -15,7 +15,7 @@ export function Label({ htmlFor, children, required }: LabelProps) {
       className="block text-sm font-medium text-slate-200 mb-1.5"
     >
       {children}
-      {required && <span className="text-orange ml-1">*</span>}
+      {required && <span className="text-orange ml-1" aria-hidden="true">*</span>}
     </label>
   );
 }
@@ -30,8 +30,13 @@ export function FieldWrapper({ error, children }: FieldWrapperProps) {
     <div className="flex flex-col gap-1">
       {children}
       {error && (
-        <p className="text-red-400 text-xs mt-0.5 flex items-center gap-1">
-          <svg className="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+        <p role="alert" className="text-red-400 text-xs mt-0.5 flex items-start gap-1">
+          <svg
+            className="w-3 h-3 flex-shrink-0 mt-0.5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            aria-hidden="true"
+          >
             <path
               fillRule="evenodd"
               d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
@@ -45,6 +50,7 @@ export function FieldWrapper({ error, children }: FieldWrapperProps) {
   );
 }
 
+/* ── Input ──────────────────────────────────────── */
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   error?: boolean;
 };
@@ -56,13 +62,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         {...props}
         className={`
-          w-full px-4 py-3 rounded-xl
-          bg-navy-dark border text-white text-sm
+          w-full px-3 xs:px-4 py-3 rounded-xl
+          bg-navy-dark border text-white
+          /* 16px on mobile (prevents iOS zoom), 14px on sm+ */
+          text-base sm:text-sm
           placeholder:text-muted/60
           transition-all duration-200
           ${
             error
-              ? "border-red-400 focus:ring-2 focus:ring-red-400"
+              ? "border-red-400 focus:ring-2 focus:ring-red-400/50"
               : "border-orange/20 focus:border-orange/60 focus:ring-2 focus:ring-orange/30"
           }
           focus:outline-none
@@ -74,6 +82,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 );
 Input.displayName = "Input";
 
+/* ── Textarea ───────────────────────────────────── */
 type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   error?: boolean;
 };
@@ -85,13 +94,14 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         ref={ref}
         {...props}
         className={`
-          w-full px-4 py-3 rounded-xl
-          bg-navy-dark border text-white text-sm
+          w-full px-3 xs:px-4 py-3 rounded-xl
+          bg-navy-dark border text-white
+          text-base sm:text-sm
           placeholder:text-muted/60
-          transition-all duration-200 min-h-[120px]
+          transition-all duration-200 min-h-[110px] sm:min-h-[120px]
           ${
             error
-              ? "border-red-400 focus:ring-2 focus:ring-red-400"
+              ? "border-red-400 focus:ring-2 focus:ring-red-400/50"
               : "border-orange/20 focus:border-orange/60 focus:ring-2 focus:ring-orange/30"
           }
           focus:outline-none
@@ -103,6 +113,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 );
 Textarea.displayName = "Textarea";
 
+/* ── Select ─────────────────────────────────────── */
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   error?: boolean;
   options: { value: string; label: string }[];
@@ -116,12 +127,13 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         ref={ref}
         {...props}
         className={`
-          w-full px-4 py-3 rounded-xl
-          bg-navy-dark border text-white text-sm
+          w-full px-3 xs:px-4 py-3 rounded-xl
+          bg-navy-dark border text-white
+          text-base sm:text-sm
           transition-all duration-200
           ${
             error
-              ? "border-red-400 focus:ring-2 focus:ring-red-400"
+              ? "border-red-400 focus:ring-2 focus:ring-red-400/50"
               : "border-orange/20 focus:border-orange/60 focus:ring-2 focus:ring-orange/30"
           }
           focus:outline-none
@@ -148,6 +160,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
 );
 Select.displayName = "Select";
 
+/* ── RadioGroup ─────────────────────────────────── */
 interface RadioGroupProps {
   name: string;
   options: string[];
@@ -165,13 +178,16 @@ export function RadioGroup({
 }: RadioGroupProps) {
   return (
     <FieldWrapper error={error}>
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-2 xs:gap-2.5">
         {options.map((opt) => (
           <label
             key={opt}
             className={`
-              flex items-center gap-2 px-4 py-2.5 rounded-xl border cursor-pointer
-              text-sm font-medium transition-all duration-200
+              inline-flex items-center gap-2 px-3 xs:px-4 py-2 xs:py-2.5
+              rounded-xl border cursor-pointer
+              text-xs xs:text-sm font-medium
+              transition-all duration-200 select-none
+              min-h-[40px] xs:min-h-[44px]
               ${
                 value === opt
                   ? "border-orange bg-orange/10 text-orange"
@@ -186,17 +202,19 @@ export function RadioGroup({
               checked={value === opt}
               onChange={() => onChange(opt)}
               className="sr-only"
+              aria-label={opt}
             />
             <span
-              className={`w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0
+              className={`w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0
                 ${value === opt ? "border-orange" : "border-muted/60"}
               `}
+              aria-hidden="true"
             >
               {value === opt && (
-                <span className="w-2 h-2 rounded-full bg-orange block" />
+                <span className="w-1.5 h-1.5 xs:w-2 xs:h-2 rounded-full bg-orange block" />
               )}
             </span>
-            {opt}
+            <span className="leading-snug">{opt}</span>
           </label>
         ))}
       </div>
@@ -204,6 +222,7 @@ export function RadioGroup({
   );
 }
 
+/* ── Checkbox ───────────────────────────────────── */
 interface CheckboxProps {
   id: string;
   label: React.ReactNode;
@@ -221,7 +240,10 @@ export function Checkbox({
 }: CheckboxProps) {
   return (
     <FieldWrapper error={error}>
-      <label htmlFor={id} className="flex items-start gap-3 cursor-pointer group">
+      <label
+        htmlFor={id}
+        className="flex items-start gap-3 cursor-pointer group min-h-[44px] py-1"
+      >
         <div
           className={`
             mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0
@@ -232,6 +254,7 @@ export function Checkbox({
                 : "border-orange/40 group-hover:border-orange/70"
             }
           `}
+          aria-hidden="true"
         >
           {checked && (
             <svg
@@ -241,7 +264,11 @@ export function Checkbox({
               stroke="currentColor"
               strokeWidth={3}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M5 13l4 4L19 7"
+              />
             </svg>
           )}
         </div>
@@ -252,7 +279,9 @@ export function Checkbox({
           onChange={(e) => onChange(e.target.checked)}
           className="sr-only"
         />
-        <span className="text-sm text-slate-300 leading-relaxed">{label}</span>
+        <span className="text-xs xs:text-sm text-slate-300 leading-relaxed pt-0.5">
+          {label}
+        </span>
       </label>
     </FieldWrapper>
   );

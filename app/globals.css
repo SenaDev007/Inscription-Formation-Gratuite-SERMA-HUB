@@ -27,9 +27,43 @@ body {
 body {
   color: white;
   font-family: var(--font-inter), sans-serif;
+  /* Smoother text on all devices */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar */
+/* ── iOS zoom prevention ──────────────────────────
+   iOS zooms in when input font-size < 16px.
+   Force 16px on mobile, allow smaller on larger screens. */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+@media (min-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 14px;
+  }
+}
+
+/* ── Touch improvements ─────────────────────────── */
+button,
+a,
+label,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Minimum touch target size (WCAG 2.5.5) */
+button,
+[role="button"] {
+  min-height: 44px;
+}
+
+/* ── Custom scrollbar ───────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -44,18 +78,24 @@ body {
   background: #F59B1E;
 }
 
-/* Focus ring override */
+/* ── Focus ring override ────────────────────────── */
 .focus-orange:focus {
   outline: none;
   box-shadow: 0 0 0 2px #F59B1E;
 }
 
-/* Checkbox custom */
+/* ── Checkbox custom ────────────────────────────── */
 input[type="checkbox"] {
   accent-color: #F59B1E;
 }
 
-/* Textarea resize */
+/* ── Textarea resize ────────────────────────────── */
 textarea {
   resize: vertical;
+}
+
+/* ── Prevent horizontal overflow on small screens ── */
+.overflow-guard {
+  overflow-x: hidden;
+  word-break: break-word;
 }
