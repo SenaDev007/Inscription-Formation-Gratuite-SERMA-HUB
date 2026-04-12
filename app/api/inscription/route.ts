@@ -46,8 +46,10 @@ export async function POST(req: NextRequest) {
     if (toEmail && process.env.RESEND_API_KEY) {
       try {
         const html = generateEmailHTML(data);
+        // From: nom d'affichage SERMA HUB, domaine technique academiahelm.com (vérifié)
+        // Le destinataire voit uniquement "SERMA HUB Impact Academy", pas le domaine.
         const { data: sendData, error: sendError } = await resend.emails.send({
-          from: "SERMA HUB Impact Academy <onboarding@resend.dev>",
+          from: "SERMA HUB Impact Academy <noreply@academiahelm.com>",
           to: [toEmail],
           subject: `Nouvelle inscription — ${data.prenom} ${data.nom}`,
           html,
@@ -55,13 +57,7 @@ export async function POST(req: NextRequest) {
         });
 
         if (sendError) {
-          // Log full Resend error for diagnosis in Vercel logs
           console.error("[SERMA HUB] Erreur Resend:", JSON.stringify(sendError));
-          console.error(
-            "[SERMA HUB] Note: avec onboarding@resend.dev, l'envoi est limité",
-            "à l'email du compte Resend. Pour envoyer à n'importe quel email,",
-            "vérifiez votre domaine sur https://resend.com/domains"
-          );
         } else {
           console.log("[SERMA HUB] Email envoyé avec succès. ID:", sendData?.id);
         }
