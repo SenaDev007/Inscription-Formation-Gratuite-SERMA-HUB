@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Check } from "lucide-react";
 
 interface StepIndicatorProps {
   currentStep: number;
@@ -59,19 +60,11 @@ export default function StepIndicator({
                 }}
               >
                 {isCompleted ? (
-                  <svg
+                  <Check
                     className="w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
                     strokeWidth={3}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+                    aria-hidden="true"
+                  />
                 ) : (
                   step
                 )}

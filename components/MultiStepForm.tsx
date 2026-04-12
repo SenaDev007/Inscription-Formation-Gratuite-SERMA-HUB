@@ -5,6 +5,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
 import {
+  ChevronLeft,
+  ChevronRight,
+  Send,
+  Loader2,
+  Check,
+  AlertTriangle,
+} from "lucide-react";
+import {
   step1Schema,
   step2Schema,
   step3Schema,
@@ -239,12 +247,14 @@ export default function MultiStepForm() {
               onClick={goPrev}
               className="
                 xs:w-auto px-5 xs:px-6 py-3 rounded-xl
+                inline-flex items-center justify-center gap-2
                 border border-orange/30 text-orange font-semibold text-sm
                 transition-all duration-200 hover:bg-orange/10
                 active:bg-orange/20
               "
             >
-              ← Précédent
+              <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+              Précédent
             </button>
           )}
           {step < TOTAL_STEPS && (
@@ -253,13 +263,15 @@ export default function MultiStepForm() {
               onClick={goNext}
               className="
                 flex-1 px-6 py-3 rounded-xl
+                inline-flex items-center justify-center gap-2
                 bg-orange text-navy font-bold text-sm
                 transition-all duration-200
                 hover:bg-orange-hover hover:shadow-orange
                 active:scale-[0.98]
               "
             >
-              Suivant →
+              Suivant
+              <ChevronRight className="w-4 h-4" aria-hidden="true" />
             </button>
           )}
         </div>
@@ -468,19 +480,7 @@ function Step3({ errors, watch, setValue }: StepProps) {
                     aria-hidden="true"
                   >
                     {isSelected && (
-                      <svg
-                        className="w-3 h-3 text-navy"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={3}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
+                      <Check className="w-3 h-3 text-navy" strokeWidth={3} aria-hidden="true" />
                     )}
                   </div>
                   <span
@@ -661,8 +661,9 @@ function Step5({
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-red-500/10 border border-red-400/40 rounded-xl p-3 xs:p-4 text-red-400 text-xs xs:text-sm"
+          className="bg-red-500/10 border border-red-400/40 rounded-xl p-3 xs:p-4 text-red-400 text-xs xs:text-sm flex items-start gap-2"
         >
+          <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-px" aria-hidden="true" />
           {submitError}
         </motion.div>
       )}
@@ -672,6 +673,7 @@ function Step5({
         disabled={isSubmitting}
         className={`
           w-full py-3.5 xs:py-4 rounded-xl font-bold text-sm xs:text-base
+          inline-flex items-center justify-center gap-2
           transition-all duration-200
           ${
             isSubmitting
@@ -681,31 +683,15 @@ function Step5({
         `}
       >
         {isSubmitting ? (
-          <span className="flex items-center justify-center gap-2">
-            <svg
-              className="animate-spin h-4 w-4 xs:h-5 xs:w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-              />
-            </svg>
+          <>
+            <Loader2 className="h-4 w-4 xs:h-5 xs:w-5 animate-spin" aria-hidden="true" />
             Envoi en cours...
-          </span>
+          </>
         ) : (
-          "Soumettre ma candidature →"
+          <>
+            Soumettre ma candidature
+            <Send className="h-4 w-4 xs:h-5 xs:w-5" aria-hidden="true" />
+          </>
         )}
       </button>
     </div>

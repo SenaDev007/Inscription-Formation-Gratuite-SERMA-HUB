@@ -2,80 +2,38 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import {
+  CalendarDays,
+  Clock3,
+  BadgeCheck,
+  Users,
+  MapPin,
+  Phone,
+} from "lucide-react";
 import MultiStepForm from "@/components/MultiStepForm";
-
-/* ── SVG Icon components (no emojis) ─────────────────── */
-function CalendarIcon() {
-  return (
-    <svg className="w-5 h-5 text-orange mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-    </svg>
-  );
-}
-
-function ClockIcon() {
-  return (
-    <svg className="w-5 h-5 text-orange mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-    </svg>
-  );
-}
-
-function BadgeCheckIcon() {
-  return (
-    <svg className="w-5 h-5 text-orange mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-    </svg>
-  );
-}
-
-function UsersIcon() {
-  return (
-    <svg className="w-5 h-5 text-orange mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-    </svg>
-  );
-}
-
-function MapPinIcon() {
-  return (
-    <svg className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-    </svg>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 6.75Z" />
-    </svg>
-  );
-}
 
 /* ── Info items ──────────────────────────────────────── */
 const INFO_ITEMS = [
   {
-    icon: <CalendarIcon />,
+    icon: <CalendarDays className="w-5 h-5 text-orange mx-auto" aria-hidden="true" />,
     label: "Dates",
     value: "16 · 17 · 18 Avril 2026",
     sub: "Jeu · Ven · Sam",
   },
   {
-    icon: <ClockIcon />,
+    icon: <Clock3 className="w-5 h-5 text-orange mx-auto" aria-hidden="true" />,
     label: "Horaire",
     value: "À partir de 9h00",
     sub: "3 jours consécutifs",
   },
   {
-    icon: <BadgeCheckIcon />,
+    icon: <BadgeCheck className="w-5 h-5 text-orange mx-auto" aria-hidden="true" />,
     label: "Frais",
     value: "100% Gratuit",
     sub: "Attestation 5 000 FCFA",
   },
   {
-    icon: <UsersIcon />,
+    icon: <Users className="w-5 h-5 text-orange mx-auto" aria-hidden="true" />,
     label: "Places",
     value: "10 max",
     sub: "par cohorte",
@@ -183,7 +141,7 @@ export default function Home() {
               className="bg-navy-light border border-orange/20 rounded-xl p-4 mb-6 lg:mb-0"
             >
               <div className="flex items-start gap-3">
-                <MapPinIcon />
+                <MapPin className="w-5 h-5 text-orange flex-shrink-0 mt-0.5" aria-hidden="true" />
                 <div className="min-w-0">
                   <p className="text-white font-semibold text-[10px] xs:text-xs uppercase tracking-wider mb-1">
                     Lieu de la formation
@@ -201,7 +159,7 @@ export default function Home() {
                     className="inline-flex items-center gap-1.5 mt-2 text-orange text-xs font-semibold hover:text-orange-hover active:text-orange-hover transition-colors"
                     aria-label="Appeler le 01 40 37 71 99"
                   >
-                    <PhoneIcon />
+                    <Phone className="w-3.5 h-3.5" aria-hidden="true" />
                     01 40 37 71 99
                   </a>
                 </div>
