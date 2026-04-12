@@ -119,6 +119,28 @@ export default function MultiStepForm() {
     setSubmitError(null);
     const finalData = { ...formData, ...data } as FullFormData;
 
+    // Check for duplicate submission (same nom + prenom + email)
+    try {
+      const stored = localStorage.getItem("serma_inscriptions");
+      const inscriptions: Array<{ email: string; nom: string; prenom: string }> =
+        stored ? JSON.parse(stored) : [];
+      const isDuplicate = inscriptions.some(
+        (i) =>
+          i.email.toLowerCase() === finalData.email.toLowerCase() &&
+          i.nom.toLowerCase() === finalData.nom.toLowerCase() &&
+          i.prenom.toLowerCase() === finalData.prenom.toLowerCase()
+      );
+      if (isDuplicate) {
+        setSubmitError(
+          "Vous avez déjà soumis une candidature avec ces informations. Contactez-nous au 01 40 37 71 99 si vous avez besoin d'aide."
+        );
+        setIsSubmitting(false);
+        return;
+      }
+    } catch {
+      // localStorage unavailable — proceed anyway
+    }
+
     try {
       const res = await fetch("/api/inscription", {
         method: "POST",
@@ -129,6 +151,19 @@ export default function MultiStepForm() {
       if (!res.ok) {
         setSubmitError(result.error || "Une erreur est survenue.");
       } else {
+        // Save submission to prevent duplicates
+        try {
+          const stored = localStorage.getItem("serma_inscriptions");
+          const inscriptions = stored ? JSON.parse(stored) : [];
+          inscriptions.push({
+            email: finalData.email,
+            nom: finalData.nom,
+            prenom: finalData.prenom,
+          });
+          localStorage.setItem("serma_inscriptions", JSON.stringify(inscriptions));
+        } catch {
+          // localStorage unavailable
+        }
         setIsSuccess(true);
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
