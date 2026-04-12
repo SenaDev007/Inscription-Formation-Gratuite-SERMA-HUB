@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import {
   CalendarDays,
   Clock3,
@@ -67,18 +66,6 @@ export default function Home() {
               transition={{ duration: 0.45 }}
               className="text-center lg:text-left mb-6 sm:mb-8"
             >
-              {/* Logo mark */}
-              <div className="flex justify-center lg:justify-start mb-4">
-                <Image
-                  src="/logo.svg"
-                  alt="SERMA HUB Impact Academy"
-                  width={88}
-                  height={80}
-                  priority
-                  className="w-20 h-auto xs:w-24 sm:w-28"
-                />
-              </div>
-
               <div className="mb-3">
                 <h1 className="font-syne text-4xl xs:text-5xl sm:text-6xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight leading-none">
                   <span className="text-white">SERMA</span>
