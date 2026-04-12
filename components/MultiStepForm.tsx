@@ -70,6 +70,7 @@ export default function MultiStepForm() {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
     trigger,
   } = useForm<FullFormData>({
@@ -130,10 +131,38 @@ export default function MultiStepForm() {
     }
   };
 
+  const handleReset = () => {
+    setStep(1);
+    setIsSuccess(false);
+    setDirection(1);
+    setFormData({});
+    setSubmitError(null);
+    reset({
+      nom: "",
+      prenom: "",
+      sexe: undefined,
+      whatsapp: "",
+      email: "",
+      ville: "",
+      statut: undefined,
+      domaine: "",
+      niveauEtudes: undefined,
+      modules: [],
+      source: undefined,
+      motivation: "",
+      attentes: "",
+      attestation: undefined,
+      conditionsAcceptees: undefined,
+      presenceConfirmee: undefined,
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   if (isSuccess) {
     return (
       <SuccessScreen
         name={`${watchedValues.prenom || formData.prenom || ""}`}
+        onReset={handleReset}
       />
     );
   }
