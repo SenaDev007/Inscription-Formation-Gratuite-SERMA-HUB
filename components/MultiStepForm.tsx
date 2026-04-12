@@ -396,7 +396,7 @@ function Step3({ errors, watch, setValue }: StepProps) {
   const toggleModule = (mod: string) => {
     const current = selectedModules || [];
     const updated = current.includes(mod)
-      ? current.filter((m) => m !== mod)
+      ? current.filter((m: string) => m !== mod)
       : [...current, mod];
     setValue("modules", updated);
   };
