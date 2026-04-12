@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       to: [toEmail],
       subject: `Nouvelle inscription — ${data.prenom} ${data.nom}`,
       html,
-      replyTo: data.email,
+      reply_to: data.email,
     });
 
     if (error) {
