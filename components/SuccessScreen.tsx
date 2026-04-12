@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
+import { Check, RotateCcw } from "lucide-react";
 
 interface SuccessScreenProps {
   name: string;
@@ -52,23 +53,17 @@ export default function SuccessScreen({ name, onReset }: SuccessScreenProps) {
         transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 15 }}
         className="w-20 h-20 xs:w-24 xs:h-24 rounded-full bg-green-serma/20 border-2 border-green-serma mx-auto mb-5 xs:mb-6 flex items-center justify-center"
       >
-        <motion.svg
-          className="w-10 h-10 xs:w-12 xs:h-12 text-green-serma"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2.5}
-          aria-hidden="true"
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.4, ease: "easeOut" }}
         >
-          <motion.path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M5 13l4 4L19 7"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ delay: 0.4, duration: 0.6, ease: "easeInOut" }}
+          <Check
+            className="w-10 h-10 xs:w-12 xs:h-12 text-green-serma"
+            strokeWidth={2.5}
+            aria-hidden="true"
           />
-        </motion.svg>
+        </motion.div>
       </motion.div>
 
       <motion.div
@@ -133,16 +128,7 @@ export default function SuccessScreen({ name, onReset }: SuccessScreenProps) {
           onClick={onReset}
           className="mt-6 xs:mt-8 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-orange/30 text-orange text-sm font-semibold hover:bg-orange/10 active:bg-orange/20 transition-all duration-200"
         >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-          </svg>
+          <RotateCcw className="w-4 h-4" aria-hidden="true" />
           Nouvelle inscription
         </motion.button>
       </motion.div>

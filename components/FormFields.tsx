@@ -1,6 +1,7 @@
 "use client";
 
 import { InputHTMLAttributes, TextareaHTMLAttributes, forwardRef } from "react";
+import { AlertCircle, Check } from "lucide-react";
 
 interface LabelProps {
   htmlFor?: string;
@@ -30,19 +31,8 @@ export function FieldWrapper({ error, children }: FieldWrapperProps) {
     <div className="flex flex-col gap-1">
       {children}
       {error && (
-        <p role="alert" className="text-red-400 text-xs mt-0.5 flex items-start gap-1">
-          <svg
-            className="w-3 h-3 flex-shrink-0 mt-0.5"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-              clipRule="evenodd"
-            />
-          </svg>
+        <p role="alert" className="text-red-400 text-xs mt-0.5 flex items-start gap-1.5">
+          <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-px" aria-hidden="true" />
           {error}
         </p>
       )}
@@ -64,7 +54,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         className={`
           w-full px-3 xs:px-4 py-3 rounded-xl
           bg-navy-dark border text-white
-          /* 16px on mobile (prevents iOS zoom), 14px on sm+ */
           text-base sm:text-sm
           placeholder:text-muted/60
           transition-all duration-200
@@ -257,19 +246,7 @@ export function Checkbox({
           aria-hidden="true"
         >
           {checked && (
-            <svg
-              className="w-3 h-3 text-navy"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={3}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
+            <Check className="w-3 h-3 text-navy" strokeWidth={3} />
           )}
         </div>
         <input
