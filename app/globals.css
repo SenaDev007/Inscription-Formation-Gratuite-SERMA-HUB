@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #1B2A5C;
+  --navy-light: #243570;
+  --orange: #F59B1E;
+  --green: #2BA96B;
+  --white: #FFFFFF;
+  --muted: #94A3B8;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: #1B2A5C;
+}
+
+body {
+  color: white;
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #141f45;
+}
+::-webkit-scrollbar-thumb {
+  background: #243570;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F59B1E;
+}
+
+/* Focus ring override */
+.focus-orange:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #F59B1E;
+}
+
+/* Checkbox custom */
+input[type="checkbox"] {
+  accent-color: #F59B1E;
+}
+
+/* Textarea resize */
+textarea {
+  resize: vertical;
+}
