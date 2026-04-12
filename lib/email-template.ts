@@ -20,6 +20,19 @@ export function generateEmailHTML(data: FullFormData): string {
 
   const modulesList = modules.map((m) => `<li>${m}</li>`).join("");
 
+  // Format WhatsApp number: strip leading 0 then prepend 229
+  // e.g. 01xxxxxxxx → 229xxxxxxxx  (NOT 22901xxxxxxxx)
+  const waNumber = (() => {
+    const cleaned = whatsapp.replace(/[\s\-\(\)\.]/g, "");
+    if (cleaned.startsWith("+")) return cleaned.slice(1);
+    if (cleaned.startsWith("229")) return cleaned;
+    if (cleaned.startsWith("0")) return "229" + cleaned.slice(1);
+    return "229" + cleaned;
+  })();
+  const waLink = `https://wa.me/${waNumber}`;
+  const waText = encodeURIComponent(`Bonjour ${prenom}, nous avons bien reçu votre inscription à la formation SERMA HUB Impact Academy (16-18 Avril 2026). Nous vous contactons pour confirmer votre place.`);
+  const waDeepLink = `https://wa.me/${waNumber}?text=${waText}`;
+
   return `
 <!DOCTYPE html>
 <html lang="fr">
@@ -60,9 +73,22 @@ export function generateEmailHTML(data: FullFormData): string {
             </td>
           </tr>
 
+          <!-- WHATSAPP CTA -->
+          <tr>
+            <td style="background:#1B2A5C;padding:8px 40px 24px;text-align:center;">
+              <a href="${waDeepLink}"
+                 style="display:inline-block;background-color:#25D366;color:#FFFFFF;font-size:15px;font-weight:700;text-decoration:none;padding:14px 32px;border-radius:10px;letter-spacing:0.5px;">
+                💬 Ouvrir la discussion WhatsApp
+              </a>
+              <p style="margin:10px 0 0;color:#94A3B8;font-size:12px;">
+                ${whatsapp} → <span style="color:#25D366;">+${waNumber}</span>
+              </p>
+            </td>
+          </tr>
+
           <!-- SECTION 2 -->
           <tr>
-            <td style="background:#1B2A5C;padding:24px 40px 8px;">
+            <td style="background:#1B2A5C;padding:24px 40px 8px;border-top:1px solid rgba(245,155,30,0.15);">
               <p style="margin:0 0 16px;color:#F59B1E;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border-left:3px solid #F59B1E;padding-left:10px;">
                 Profil professionnel
               </p>
