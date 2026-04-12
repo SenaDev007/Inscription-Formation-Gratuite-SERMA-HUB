@@ -20,12 +20,14 @@ export function generateEmailHTML(data: FullFormData): string {
 
   const modulesList = modules.map((m) => `<li>${m}</li>`).join("");
 
-  // Format WhatsApp number for Benin: numbers entered as 8 digits (e.g. 95722234)
-  // → international format 22995722234
+  // Normalize Beninese WhatsApp number → always 22995722234 format
+  // Handles: 95722234 / 0195722234 / +2290195722234 / 22995722234
   const waNumber = (() => {
-    const cleaned = whatsapp.replace(/[\s\-\(\)\.+]/g, "");
-    if (cleaned.startsWith("229")) return cleaned;
-    return "229" + cleaned;
+    let n = whatsapp.replace(/[\s\-\(\)\.+]/g, "");
+    if (n.startsWith("229")) n = n.slice(3);   // strip country code
+    if (n.startsWith("01"))  n = n.slice(2);   // strip Benin 10-digit prefix
+    if (n.startsWith("0"))   n = n.slice(1);   // strip any remaining leading 0
+    return "229" + n;
   })();
   const waText = encodeURIComponent(`Bonjour ${prenom}, nous avons bien reçu votre inscription à la formation SERMA HUB Impact Academy (16-18 Avril 2026). Nous vous contactons pour confirmer votre place.`);
   const waDeepLink = `https://wa.me/${waNumber}?text=${waText}`;
