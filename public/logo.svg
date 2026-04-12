@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-25 0 310 280" fill="none">
+  <!-- Main circle -->
+  <circle cx="130" cy="138" r="128" fill="#152048"/>
+  <circle cx="130" cy="138" r="128" stroke="#2a4282" stroke-width="8"/>
+  <circle cx="130" cy="138" r="120" stroke="#1e3268" stroke-width="1.5" opacity="0.35"/>
+
+  <!-- Africa silhouette (simplified) -->
+  <path d="M130 25C148 25 170 38 180 62C190 86 185 106 191 124C197 142 210 158 205 178C200 198 186 220 170 237C154 254 140 263 128 262C116 261 100 251 88 235C76 219 69 199 71 177C73 155 87 142 84 122C81 102 79 82 89 62C99 42 114 25 130 25Z" fill="#1e3070" opacity="0.5"/>
+
+  <!-- Green PCB circuit traces (left side) -->
+  <g stroke="#2BA96B" stroke-width="2.5" stroke-linecap="round" fill="#2BA96B">
+    <line x1="-12" y1="88" x2="30" y2="88"/>
+    <circle cx="-12" cy="88" r="5.5" stroke="none"/>
+    <line x1="30" y1="88" x2="30" y2="110"/>
+
+    <line x1="-16" y1="122" x2="22" y2="122"/>
+    <circle cx="-16" cy="122" r="5.5" stroke="none"/>
+    <line x1="22" y1="122" x2="22" y2="144"/>
+
+    <line x1="-6" y1="155" x2="32" y2="155"/>
+    <circle cx="-6" cy="155" r="5.5" stroke="none"/>
+
+    <line x1="-14" y1="188" x2="26" y2="188"/>
+    <circle cx="-14" cy="188" r="5.5" stroke="none"/>
+    <line x1="26" y1="188" x2="26" y2="166"/>
+  </g>
+
+  <!-- Orange rising arrow (exits circle upper-right) -->
+  <line x1="100" y1="242" x2="242" y2="42" stroke="#F59B1E" stroke-width="20" stroke-linecap="round"/>
+  <path d="M252 28L276 58L248 54Z" fill="#F59B1E"/>
+
+  <!-- White S-lightning bolt -->
+  <path d="M115 68L168 68L108 150L165 150L105 232L148 232"
+        stroke="white" stroke-width="18" stroke-linecap="square" stroke-linejoin="bevel" fill="none"/>
+</svg>

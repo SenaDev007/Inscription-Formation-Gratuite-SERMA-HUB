@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, Syne } from "next/font/google";
+import { Raleway, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const syne = Syne({
+// Raleway replaces Syne — keeps same CSS variable so all font-syne classes work unchanged
+const raleway = Raleway({
   subsets: ["latin"],
   variable: "--font-syne",
   display: "swap",
   weight: ["400", "600", "700", "800"],
+});
+
+// DM Sans replaces Inter — keeps same CSS variable
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${syne.variable}`}>
+    <html lang="fr" className={`${dmSans.variable} ${raleway.variable}`}>
       <body className="font-inter bg-navy antialiased">{children}</body>
     </html>
   );
