@@ -2,12 +2,14 @@
 
 import { motion } from "framer-motion";
 import {
+  BookOpen,
   CalendarDays,
   Clock3,
   BadgeCheck,
   Users,
   MapPin,
   Phone,
+  CheckCircle2,
 } from "lucide-react";
 import MultiStepForm from "@/components/MultiStepForm";
 
@@ -118,6 +120,66 @@ export default function Home() {
                   <p className="text-muted text-[9px] xs:text-[10px] mt-0.5">{item.sub}</p>
                 </motion.div>
               ))}
+            </motion.div>
+
+            {/* ── Modules ── */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35 }}
+              className="space-y-3 mb-5 sm:mb-6"
+            >
+              <p className="text-orange text-[10px] xs:text-xs font-semibold uppercase tracking-wider flex items-center gap-2">
+                <BookOpen className="w-4 h-4" aria-hidden="true" />
+                Modules de formation
+              </p>
+
+              {/* Module 1 */}
+              <div className="bg-navy-light border border-orange/20 rounded-xl p-3 xs:p-4">
+                <p className="text-white text-xs xs:text-sm font-bold mb-2 leading-snug">
+                  PERFECTO SYSCOHADA Révisé
+                </p>
+                <p className="text-muted text-[10px] xs:text-xs mb-2">
+                  À la fin, le participant est capable de :
+                </p>
+                <ul className="space-y-1">
+                  {[
+                    "Tenir une comptabilité complète sur PERFECTO",
+                    "Appliquer correctement le SYSCOHADA Révisé",
+                    "Produire des états financiers fiables",
+                    "Travailler en entreprise, ONG ou cabinet comptable",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-1.5">
+                      <CheckCircle2 className="w-3 h-3 xs:w-3.5 xs:h-3.5 text-orange flex-shrink-0 mt-px" aria-hidden="true" />
+                      <span className="text-slate-300 text-[10px] xs:text-xs leading-snug">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Module 2 */}
+              <div className="bg-navy-light border border-orange/20 rounded-xl p-3 xs:p-4">
+                <p className="text-white text-xs xs:text-sm font-bold mb-2 leading-snug">
+                  Gestion efficace de la caisse en entreprise et en IMF
+                </p>
+                <p className="text-muted text-[10px] xs:text-xs mb-2">
+                  Vous serez capables de :
+                </p>
+                <ul className="space-y-1">
+                  {[
+                    "Gérer une caisse en entreprise sans erreur",
+                    "Travailler comme caissier ou contrôleur en IMF",
+                    "Appliquer des procédures professionnelles (audit, contrôle)",
+                    "Sécuriser les fonds et éviter les fraudes",
+                    "Produire un suivi clair et fiable",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-1.5">
+                      <CheckCircle2 className="w-3 h-3 xs:w-3.5 xs:h-3.5 text-green-serma flex-shrink-0 mt-px" aria-hidden="true" />
+                      <span className="text-slate-300 text-[10px] xs:text-xs leading-snug">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </motion.div>
 
             {/* ── Lieu ── */}
