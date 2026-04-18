@@ -652,7 +652,7 @@ function Step5({
             <strong className="text-white">3 jours</strong> de formation
           </li>
           <li>
-            Dates : Jeudi 16, Vendredi 17, Samedi 18 Avril 2026 — dès 9h00
+            Dates : Jeudi 23, Vendredi 24, Samedi 25 Avril 2026 — dès 9h00
           </li>
           <li>
             Formation 100% gratuite (attestation opt. : 5 000 FCFA)
@@ -686,7 +686,7 @@ function Step5({
               <strong className="text-white">
                 3 jours de formation
               </strong>{" "}
-              (16, 17 et 18 Avril 2026).
+              (23, 24 et 25 Avril 2026).
             </span>
           }
         />

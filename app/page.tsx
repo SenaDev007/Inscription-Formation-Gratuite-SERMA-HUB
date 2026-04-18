@@ -16,7 +16,7 @@ const INFO_ITEMS = [
   {
     icon: <CalendarDays className="w-5 h-5 text-orange mx-auto" aria-hidden="true" />,
     label: "Dates",
-    value: "16 · 17 · 18 Avril 2026",
+    value: "23 · 24 · 25 Avril 2026",
     sub: "Jeu · Ven · Sam",
   },
   {
@@ -80,7 +80,7 @@ export default function Home() {
                 Inscription à la Formation Gratuite
               </h2>
               <p className="text-muted text-sm leading-relaxed max-w-sm mx-auto lg:mx-0">
-                Renforcez vos compétences en comptabilité avec nos experts.
+                Étudiant ou professionnel ? Montez en compétence avec des outils concrets — PERFECTO SYSCOHADA et gestion de caisse.
                 Places limitées — inscrivez-vous dès maintenant.
               </p>
 

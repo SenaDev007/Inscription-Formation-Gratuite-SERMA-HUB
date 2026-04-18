@@ -79,8 +79,8 @@ export type Step5Data = z.infer<typeof step5Schema>;
 export type FullFormData = z.infer<typeof fullFormSchema>;
 
 export const MODULES = [
-  "Système d'Organisation Comptable en Entreprise",
   "PERFECTO SYSCOHADA Révisé",
+  "Gestion efficace de la caisse en entreprise et en institution de micro finance",
 ] as const;
 
 export const STATUTS = [
