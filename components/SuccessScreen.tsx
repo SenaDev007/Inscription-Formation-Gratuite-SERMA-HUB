@@ -92,7 +92,7 @@ export default function SuccessScreen({ name, onReset }: SuccessScreenProps) {
               Dates
             </p>
             <p className="text-white text-xs xs:text-sm font-medium">
-              16 · 17 · 18 Avril
+              23 · 24 · 25 Avril
             </p>
             <p className="text-muted text-[10px] xs:text-xs">2026</p>
           </div>
