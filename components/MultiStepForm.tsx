@@ -275,37 +275,24 @@ export default function MultiStepForm() {
         </AnimatePresence>
 
         {/* ── Navigation ── */}
-        <div className="flex flex-col xs:flex-row gap-3 mt-7 sm:mt-8">
+        <div className="flex gap-3 mt-8">
           {step > 1 && (
             <button
               type="button"
               onClick={goPrev}
-              className="
-                xs:w-auto px-5 xs:px-6 py-3 rounded-xl
-                inline-flex items-center justify-center gap-2
-                border border-orange/30 text-orange font-semibold text-sm
-                transition-all duration-200 hover:bg-orange/10
-                active:bg-orange/20
-              "
+              className="inline-flex items-center justify-center gap-1.5 px-5 py-3 rounded-xl border border-white/10 text-slate-400 text-sm font-medium transition-all duration-200 hover:border-white/20 hover:text-white active:scale-[0.98]"
             >
               <ChevronLeft className="w-4 h-4" aria-hidden="true" />
-              Précédent
+              Retour
             </button>
           )}
           {step < TOTAL_STEPS && (
             <button
               type="button"
               onClick={goNext}
-              className="
-                flex-1 px-6 py-3 rounded-xl
-                inline-flex items-center justify-center gap-2
-                bg-orange text-navy font-bold text-sm
-                transition-all duration-200
-                hover:bg-orange-hover hover:shadow-orange
-                active:scale-[0.98]
-              "
+              className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-orange text-navy-dark font-bold text-sm transition-all duration-200 hover:bg-orange-hover hover:shadow-orange active:scale-[0.98]"
             >
-              Suivant
+              Continuer
               <ChevronRight className="w-4 h-4" aria-hidden="true" />
             </button>
           )}
@@ -752,9 +739,12 @@ function Step5({
 ───────────────────────────────────────────────── */
 function StepTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="font-syne text-lg xs:text-xl font-bold text-white mb-5 sm:mb-6 pb-3 border-b border-orange/20">
-      {children}
-    </h2>
+    <div className="mb-6 sm:mb-7">
+      <h2 className="font-syne text-xl xs:text-2xl font-bold text-white leading-tight tracking-tight">
+        {children}
+      </h2>
+      <div className="mt-2.5 h-0.5 w-10 bg-orange rounded-full" />
+    </div>
   );
 }
 
