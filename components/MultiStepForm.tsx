@@ -60,6 +60,7 @@ const slideVariants = {
 
 const FEDAPAY_BASE = "https://me.fedapay.com/eUT2Wc_i";
 const PENDING_KEY = "serma_pending_inscription";
+const FORMATION_SESSION = "mai2026";
 
 export default function MultiStepForm() {
   const [step, setStep] = useState(1);
@@ -103,7 +104,13 @@ export default function MultiStepForm() {
         try {
           const stored = localStorage.getItem("serma_inscriptions");
           const inscriptions = stored ? JSON.parse(stored) : [];
-          inscriptions.push({ email: parsed.email, nom: parsed.nom, prenom: parsed.prenom });
+          inscriptions.push({
+            email: parsed.email,
+            nom: parsed.nom,
+            prenom: parsed.prenom,
+            modules: parsed.modules,
+            session: FORMATION_SESSION,
+          });
           localStorage.setItem("serma_inscriptions", JSON.stringify(inscriptions));
         } catch { /* ignore */ }
       })
@@ -167,20 +174,28 @@ export default function MultiStepForm() {
     setSubmitError(null);
     const finalData = { ...formData, ...data } as FullFormData;
 
-    // Check for duplicate submission (same nom + prenom + email)
+    // Check for duplicate: same person + same module(s) + same formation session
     try {
       const stored = localStorage.getItem("serma_inscriptions");
-      const inscriptions: Array<{ email: string; nom: string; prenom: string }> =
-        stored ? JSON.parse(stored) : [];
-      const isDuplicate = inscriptions.some(
-        (i) =>
-          i.email.toLowerCase() === finalData.email.toLowerCase() &&
-          i.nom.toLowerCase() === finalData.nom.toLowerCase() &&
-          i.prenom.toLowerCase() === finalData.prenom.toLowerCase()
-      );
-      if (isDuplicate) {
+      const inscriptions: Array<{
+        email: string; nom: string; prenom: string;
+        modules?: string[]; session?: string;
+      }> = stored ? JSON.parse(stored) : [];
+
+      const duplicateModules = inscriptions
+        .filter(
+          (i) =>
+            i.session === FORMATION_SESSION &&
+            i.email.toLowerCase() === finalData.email.toLowerCase() &&
+            i.nom.toLowerCase() === finalData.nom.toLowerCase() &&
+            i.prenom.toLowerCase() === finalData.prenom.toLowerCase()
+        )
+        .flatMap((i) => i.modules ?? [])
+        .filter((m) => finalData.modules.includes(m));
+
+      if (duplicateModules.length > 0) {
         setSubmitError(
-          "Vous avez déjà soumis une candidature avec ces informations. Contactez-nous au 01 40 37 71 99 si vous avez besoin d'aide."
+          `Vous êtes déjà inscrit(e) au module "${duplicateModules[0]}" pour cette session. Choisissez un autre module ou contactez-nous au 01 40 37 71 99.`
         );
         setIsSubmitting(false);
         return;
