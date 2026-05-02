@@ -601,7 +601,7 @@ function Step4({ register, errors, watch, setValue }: StepProps) {
       <FieldWrapper error={errors.attestation?.message}>
         <Label required>
           Souhaitez-vous une attestation ?{" "}
-          <span className="text-muted text-xs font-normal">(5 000 FCFA)</span>
+          <span className="text-muted text-xs font-normal">(3 000 FCFA)</span>
         </Label>
         <RadioGroup
           name="attestation"
@@ -637,8 +637,19 @@ function Step5({
     <div className="space-y-5 sm:space-y-6">
       <StepTitle>Confirmation & Engagement</StepTitle>
 
+      {/* Payment notice */}
+      <div className="bg-orange/15 border border-orange text-center rounded-xl p-3 xs:p-4">
+        <p className="text-orange text-xs xs:text-sm font-bold mb-1">
+          Paiement requis pour valider votre place
+        </p>
+        <p className="text-white text-lg xs:text-xl font-extrabold">2 000 FCFA</p>
+        <p className="text-muted text-[10px] xs:text-xs mt-1">
+          Le lien de paiement FedaPay vous sera affiché après envoi du formulaire.
+        </p>
+      </div>
+
       {/* Reminder box */}
-      <div className="bg-orange/10 border border-orange/30 rounded-xl p-3 xs:p-4">
+      <div className="bg-navy-dark border border-orange/20 rounded-xl p-3 xs:p-4">
         <p className="text-orange text-xs xs:text-sm font-semibold mb-2">
           Rappel important :
         </p>
@@ -652,10 +663,13 @@ function Step5({
             <strong className="text-white">3 jours</strong> de formation
           </li>
           <li>
-            Dates : Jeudi 23, Vendredi 24, Samedi 25 Avril 2026 — dès 9h00
+            Dates : Jeudi 07, Vendredi 08, Samedi 09 Mai 2026 — dès 9h00
           </li>
           <li>
-            Formation 100% gratuite (attestation opt. : 5 000 FCFA)
+            Formation 100% gratuite · Attestation opt. : 3 000 FCFA
+          </li>
+          <li>
+            Présentiel + En ligne (Zoom/Google Meet)
           </li>
         </ul>
       </div>
@@ -686,7 +700,7 @@ function Step5({
               <strong className="text-white">
                 3 jours de formation
               </strong>{" "}
-              (23, 24 et 25 Avril 2026).
+              (07, 08 et 09 Mai 2026).
             </span>
           }
         />
