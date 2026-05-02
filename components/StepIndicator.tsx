@@ -9,26 +9,16 @@ interface StepIndicatorProps {
   labels: string[];
 }
 
-export default function StepIndicator({
-  currentStep,
-  totalSteps,
-  labels,
-}: StepIndicatorProps) {
+export default function StepIndicator({ currentStep, totalSteps, labels }: StepIndicatorProps) {
   return (
-    <div className="w-full mb-7 sm:mb-8">
-      {/* Steps row */}
-      <div className="flex items-center justify-between relative px-1">
-        {/* Background line */}
-        <div className="absolute top-[13px] xs:top-[15px] sm:top-4 left-0 right-0 h-0.5 bg-navy-dark z-0" />
-
-        {/* Progress line */}
+    <div className="w-full mb-8">
+      <div className="flex items-center justify-between relative">
+        <div className="absolute top-4 left-0 right-0 h-px bg-white/[0.06] z-0" />
         <motion.div
-          className="absolute top-[13px] xs:top-[15px] sm:top-4 left-0 h-0.5 bg-orange z-0"
+          className="absolute top-4 left-0 h-px bg-orange/50 z-0"
           initial={{ width: "0%" }}
-          animate={{
-            width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%`,
-          }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
+          animate={{ width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%` }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
         />
 
         {Array.from({ length: totalSteps }).map((_, i) => {
@@ -41,45 +31,32 @@ export default function StepIndicator({
               <motion.div
                 initial={false}
                 animate={{
-                  scale: isActive ? 1.15 : 1,
                   backgroundColor: isCompleted
-                    ? "#2BA96B"
+                    ? "rgba(43,169,107,0.12)"
                     : isActive
-                    ? "#F59B1E"
-                    : "#243570",
+                    ? "rgba(245,155,30,0.12)"
+                    : "rgba(255,255,255,0.03)",
                   borderColor: isCompleted
                     ? "#2BA96B"
                     : isActive
                     ? "#F59B1E"
-                    : "#94A3B8",
+                    : "rgba(255,255,255,0.12)",
+                  boxShadow: isActive ? "0 0 16px rgba(245,155,30,0.3)" : "none",
                 }}
                 transition={{ duration: 0.3 }}
-                className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 rounded-full border-2 flex items-center justify-center text-[10px] xs:text-xs font-bold flex-shrink-0"
-                style={{
-                  color: isActive || isCompleted ? "#1B2A5C" : "#94A3B8",
-                }}
+                className="w-8 h-8 rounded-full border flex items-center justify-center text-[11px] font-bold flex-shrink-0"
+                style={{ color: isCompleted ? "#2BA96B" : isActive ? "#F59B1E" : "#475569" }}
               >
                 {isCompleted ? (
-                  <Check
-                    className="w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4"
-                    strokeWidth={3}
-                    aria-hidden="true"
-                  />
+                  <Check className="w-3.5 h-3.5" strokeWidth={2.5} aria-hidden="true" />
                 ) : (
                   step
                 )}
               </motion.div>
 
-              {/* Label — hidden on mobile, shown from sm */}
               <span
-                className={`mt-1.5 text-[9px] sm:text-[10px] font-medium text-center hidden sm:block w-[60px] sm:w-[68px] leading-tight truncate
-                  ${
-                    isActive
-                      ? "text-orange"
-                      : isCompleted
-                      ? "text-green-serma"
-                      : "text-muted"
-                  }`}
+                className={`mt-2 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-center hidden sm:block w-16 leading-tight truncate
+                  ${isActive ? "text-orange" : isCompleted ? "text-green-serma/70" : "text-slate-600"}`}
               >
                 {labels[i]}
               </span>
@@ -88,10 +65,10 @@ export default function StepIndicator({
         })}
       </div>
 
-      {/* Mobile current step label */}
       <div className="mt-3 sm:hidden text-center">
-        <span className="text-orange text-xs xs:text-sm font-semibold">
-          Étape {currentStep}/{totalSteps} — {labels[currentStep - 1]}
+        <span className="text-[10px] uppercase tracking-[0.1em] font-semibold text-slate-500">
+          Étape <span className="text-orange">{currentStep}</span>/{totalSteps}
+          <span className="text-slate-400 normal-case tracking-normal font-normal"> — {labels[currentStep - 1]}</span>
         </span>
       </div>
     </div>

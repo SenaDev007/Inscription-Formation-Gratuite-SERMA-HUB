@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --navy: #1B2A5C;
-  --navy-light: #243570;
+  --navy: #080e20;
+  --navy-light: #0d1530;
   --orange: #F59B1E;
   --green: #2BA96B;
   --white: #FFFFFF;
-  --muted: #94A3B8;
+  --muted: #64748b;
 }
 
 * {
@@ -21,20 +21,16 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: #1B2A5C;
+  background-color: #080e20;
 }
 
 body {
   color: white;
   font-family: var(--font-inter), sans-serif;
-  /* Smoother text on all devices */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── iOS zoom prevention ──────────────────────────
-   iOS zooms in when input font-size < 16px.
-   Force 16px on mobile, allow smaller on larger screens. */
 input,
 select,
 textarea {
@@ -48,7 +44,6 @@ textarea {
   }
 }
 
-/* ── Touch improvements ─────────────────────────── */
 button,
 a,
 label,
@@ -57,44 +52,33 @@ label,
   touch-action: manipulation;
 }
 
-/* Minimum touch target size (WCAG 2.5.5) */
 button,
 [role="button"] {
   min-height: 44px;
 }
 
-/* ── Custom scrollbar ───────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: #141f45;
+  background: #050810;
 }
 ::-webkit-scrollbar-thumb {
-  background: #243570;
-  border-radius: 3px;
+  background: #1a2540;
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #F59B1E;
 }
 
-/* ── Focus ring override ────────────────────────── */
-.focus-orange:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #F59B1E;
-}
-
-/* ── Checkbox custom ────────────────────────────── */
 input[type="checkbox"] {
   accent-color: #F59B1E;
 }
 
-/* ── Textarea resize ────────────────────────────── */
 textarea {
   resize: vertical;
 }
 
-/* ── Prevent horizontal overflow on small screens ── */
 .overflow-guard {
   overflow-x: hidden;
   word-break: break-word;

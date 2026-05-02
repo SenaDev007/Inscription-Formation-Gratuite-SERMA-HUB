@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Raleway, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-// Raleway replaces Syne — keeps same CSS variable so all font-syne classes work unchanged
 const raleway = Raleway({
   subsets: ["latin"],
   variable: "--font-syne",
@@ -10,7 +9,6 @@ const raleway = Raleway({
   weight: ["400", "600", "700", "800"],
 });
 
-// DM Sans replaces Inter — keeps same CSS variable
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -20,10 +18,10 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Inscription — SERMA HUB Impact Academy",
   description:
-    "Inscrivez-vous gratuitement à la formation SERMA HUB Impact Academy. Places limitées à 10 participants. Dates : 16, 17 et 18 Avril 2026.",
+    "Inscrivez-vous à la formation SERMA HUB Impact Academy. 07, 08 et 09 Mai 2026. Présentiel & En ligne. Places limitées à 10 participants.",
   openGraph: {
     title: "Inscription — SERMA HUB Impact Academy",
-    description: "Formation gratuite en comptabilité — 16, 17, 18 Avril 2026",
+    description: "Formation professionnelle — 07, 08, 09 Mai 2026 · Présentiel & En ligne",
     type: "website",
   },
 };
