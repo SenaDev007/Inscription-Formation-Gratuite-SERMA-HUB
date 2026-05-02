@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
@@ -70,6 +70,7 @@ export default function MultiStepForm() {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [paymentName, setPaymentName] = useState("");
   const [formData, setFormData] = useState<Partial<FullFormData>>({});
+  const formTopRef = useRef<HTMLDivElement>(null);
 
   // Detect FedaPay redirect after successful payment
   useEffect(() => {
@@ -142,20 +143,23 @@ export default function MultiStepForm() {
 
   const watchedValues = watch();
 
+  const scrollToForm = () => {
+    formTopRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const goNext = async () => {
     const valid = await trigger();
     if (!valid) return;
     setFormData((prev) => ({ ...prev, ...watchedValues }));
     setDirection(1);
     setStep((s) => s + 1);
-    // Scroll to top of form card on mobile
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToForm();
   };
 
   const goPrev = () => {
     setDirection(-1);
     setStep((s) => s - 1);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToForm();
   };
 
   const onSubmit = async (data: FullFormData) => {
@@ -237,7 +241,7 @@ export default function MultiStepForm() {
       conditionsAcceptees: undefined,
       presenceConfirmee: undefined,
     });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToForm();
   };
 
   if (paymentSuccess) {
@@ -254,7 +258,7 @@ export default function MultiStepForm() {
   }
 
   return (
-    <div>
+    <div ref={formTopRef}>
       <StepIndicator
         currentStep={step}
         totalSteps={TOTAL_STEPS}
