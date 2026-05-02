@@ -54,7 +54,7 @@ export function generateEmailHTML(data: FullFormData): string {
               </p>
               <p style="margin:6px 0 0;font-size:13px;letter-spacing:4px;color:#2BA96B;font-weight:600;text-transform:uppercase;">Impact Academy</p>
               <p style="margin:20px 0 0;color:#F59B1E;font-size:20px;font-weight:700;">Nouvelle Inscription Reçue</p>
-              <p style="margin:8px 0 0;color:#94A3B8;font-size:13px;">Jeudi 23 · Vendredi 24 · Samedi 25 Avril 2026</p>
+              <p style="margin:8px 0 0;color:#94A3B8;font-size:13px;">Jeudi 07 · Vendredi 08 · Samedi 09 Mai 2026</p>
             </td>
           </tr>
 

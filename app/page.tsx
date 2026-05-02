@@ -10,6 +10,7 @@ import {
   MapPin,
   Phone,
   CheckCircle2,
+  Monitor,
 } from "lucide-react";
 import MultiStepForm from "@/components/MultiStepForm";
 
@@ -18,7 +19,7 @@ const INFO_ITEMS = [
   {
     icon: <CalendarDays className="w-5 h-5 text-orange mx-auto" aria-hidden="true" />,
     label: "Dates",
-    value: "23 · 24 · 25 Avril 2026",
+    value: "07 · 08 · 09 Mai 2026",
     sub: "Jeu · Ven · Sam",
   },
   {
@@ -30,8 +31,8 @@ const INFO_ITEMS = [
   {
     icon: <BadgeCheck className="w-5 h-5 text-orange mx-auto" aria-hidden="true" />,
     label: "Frais",
-    value: "100% Gratuit",
-    sub: "Attestation 5 000 FCFA",
+    value: "2 000 FCFA",
+    sub: "Inscription · Formation offerte",
   },
   {
     icon: <Users className="w-5 h-5 text-orange mx-auto" aria-hidden="true" />,
@@ -82,7 +83,7 @@ export default function Home() {
                 Inscription à la Formation Gratuite
               </h2>
               <p className="text-muted text-sm leading-relaxed max-w-sm mx-auto lg:mx-0">
-                Étudiant ou professionnel ? Montez en compétence avec des outils concrets — PERFECTO SYSCOHADA et gestion de caisse.
+                Étudiant ou professionnel ? Montez en compétence avec des outils concrets — gestion de caisse et gestion de projet.
                 Places limitées — inscrivez-vous dès maintenant.
               </p>
 
@@ -137,17 +138,18 @@ export default function Home() {
               {/* Module 1 */}
               <div className="bg-navy-light border border-orange/20 rounded-xl p-3 xs:p-4">
                 <p className="text-white text-xs xs:text-sm font-bold mb-2 leading-snug">
-                  PERFECTO SYSCOHADA Révisé
+                  Gestion efficace de la caisse en Entreprise, Banque et Microfinance
                 </p>
                 <p className="text-muted text-[10px] xs:text-xs mb-2">
-                  À la fin, le participant est capable de :
+                  À la fin, les participants seront capables de :
                 </p>
                 <ul className="space-y-1">
                   {[
-                    "Tenir une comptabilité complète sur PERFECTO",
-                    "Appliquer correctement le SYSCOHADA Révisé",
-                    "Produire des états financiers fiables",
-                    "Travailler en entreprise, ONG ou cabinet comptable",
+                    "Maîtriser les procédures d'encaissement et de décaissement",
+                    "Tenir un brouillard et un journal de caisse quotidiennement",
+                    "Réaliser des arrêtés de caisse et détecter les écarts",
+                    "Archiver et justifier toutes les pièces de caisse",
+                    "Prévenir les risques de fraude et de détournement",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-1.5">
                       <CheckCircle2 className="w-3 h-3 xs:w-3.5 xs:h-3.5 text-orange flex-shrink-0 mt-px" aria-hidden="true" />
@@ -160,18 +162,18 @@ export default function Home() {
               {/* Module 2 */}
               <div className="bg-navy-light border border-orange/20 rounded-xl p-3 xs:p-4">
                 <p className="text-white text-xs xs:text-sm font-bold mb-2 leading-snug">
-                  Gestion efficace de la caisse en entreprise et en IMF
+                  Gestion de projet
                 </p>
                 <p className="text-muted text-[10px] xs:text-xs mb-2">
-                  Vous serez capables de :
+                  À la fin, les participants seront capables de :
                 </p>
                 <ul className="space-y-1">
                   {[
-                    "Gérer une caisse en entreprise sans erreur",
-                    "Travailler comme caissier ou contrôleur en IMF",
-                    "Appliquer des procédures professionnelles (audit, contrôle)",
-                    "Sécuriser les fonds et éviter les fraudes",
-                    "Produire un suivi clair et fiable",
+                    "Tenir une comptabilité complète d'un projet sur PERFECTO",
+                    "Appliquer le SYSCOHADA Révisé spécifique aux projets",
+                    "Élaborer un budget de projet et assurer son suivi",
+                    "Produire des rapports financiers exigés par les bailleurs",
+                    "Gérer les immobilisations et les stocks conformément aux normes OHADA",
                   ].map((item) => (
                     <li key={item} className="flex items-start gap-1.5">
                       <CheckCircle2 className="w-3 h-3 xs:w-3.5 xs:h-3.5 text-green-serma flex-shrink-0 mt-px" aria-hidden="true" />
@@ -179,6 +181,15 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              {/* Format */}
+              <div className="flex items-center gap-2.5 bg-navy-light border border-orange/20 rounded-xl p-3 xs:p-4">
+                <Monitor className="w-4 h-4 text-orange flex-shrink-0" aria-hidden="true" />
+                <div>
+                  <p className="text-orange text-[9px] xs:text-[10px] font-semibold uppercase tracking-wider">Format</p>
+                  <p className="text-white text-[10px] xs:text-xs font-medium">Présentiel & En ligne — Zoom / Google Meet</p>
+                </div>
               </div>
             </motion.div>
 
