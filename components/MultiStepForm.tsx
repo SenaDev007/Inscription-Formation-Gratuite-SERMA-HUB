@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
@@ -26,6 +26,7 @@ import {
 } from "@/lib/validations";
 import StepIndicator from "./StepIndicator";
 import SuccessScreen from "./SuccessScreen";
+import PaymentSuccessScreen from "./PaymentSuccessScreen";
 import {
   Label,
   FieldWrapper,
@@ -57,13 +58,56 @@ const slideVariants = {
   }),
 };
 
+const FEDAPAY_BASE = "https://me.fedapay.com/eUT2Wc_i";
+const PENDING_KEY = "serma_pending_inscription";
+
 export default function MultiStepForm() {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [paymentName, setPaymentName] = useState("");
   const [formData, setFormData] = useState<Partial<FullFormData>>({});
+
+  // Detect FedaPay redirect after successful payment
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const isPaid = params.get("payment") === "success" || params.get("status") === "approved";
+    if (!isPaid) return;
+
+    // Clean URL immediately
+    window.history.replaceState({}, "", window.location.pathname);
+
+    const saved = localStorage.getItem(PENDING_KEY);
+    if (!saved) return;
+
+    let parsed: FullFormData;
+    try { parsed = JSON.parse(saved); } catch { return; }
+
+    setPaymentName(`${parsed.prenom}`);
+    setPaymentSuccess(true);
+
+    // Send confirmation email via API
+    fetch("/api/payment-confirm", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: saved,
+    })
+      .then(() => {
+        localStorage.removeItem(PENDING_KEY);
+        // Mark as completed to prevent duplicate submissions
+        try {
+          const stored = localStorage.getItem("serma_inscriptions");
+          const inscriptions = stored ? JSON.parse(stored) : [];
+          inscriptions.push({ email: parsed.email, nom: parsed.nom, prenom: parsed.prenom });
+          localStorage.setItem("serma_inscriptions", JSON.stringify(inscriptions));
+        } catch { /* ignore */ }
+      })
+      .catch(console.error);
+  }, []);
 
   const schemas = [
     step1Schema,
@@ -145,31 +189,24 @@ export default function MultiStepForm() {
       const res = await fetch("/api/inscription", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(finalData),
+        body: JSON.stringify({ ...finalData, skipEmail: true }),
       });
       const result = await res.json();
       if (!res.ok) {
         setSubmitError(result.error || "Une erreur est survenue.");
+        setIsSubmitting(false);
       } else {
-        // Save submission to prevent duplicates
+        // Save form data for after payment redirect
         try {
-          const stored = localStorage.getItem("serma_inscriptions");
-          const inscriptions = stored ? JSON.parse(stored) : [];
-          inscriptions.push({
-            email: finalData.email,
-            nom: finalData.nom,
-            prenom: finalData.prenom,
-          });
-          localStorage.setItem("serma_inscriptions", JSON.stringify(inscriptions));
-        } catch {
-          // localStorage unavailable
-        }
-        setIsSuccess(true);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+          localStorage.setItem(PENDING_KEY, JSON.stringify(finalData));
+        } catch { /* ignore */ }
+
+        // Redirect to FedaPay with return URL
+        const returnUrl = `${window.location.origin}/?payment=success`;
+        window.location.href = `${FEDAPAY_BASE}?redirect_url=${encodeURIComponent(returnUrl)}`;
       }
     } catch {
       setSubmitError("Erreur réseau. Veuillez réessayer.");
-    } finally {
       setIsSubmitting(false);
     }
   };
@@ -177,6 +214,8 @@ export default function MultiStepForm() {
   const handleReset = () => {
     setStep(1);
     setIsSuccess(false);
+    setPaymentSuccess(false);
+    setPaymentName("");
     setDirection(1);
     setFormData({});
     setSubmitError(null);
@@ -200,6 +239,10 @@ export default function MultiStepForm() {
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  if (paymentSuccess) {
+    return <PaymentSuccessScreen name={paymentName} onReset={handleReset} />;
+  }
 
   if (isSuccess) {
     return (
