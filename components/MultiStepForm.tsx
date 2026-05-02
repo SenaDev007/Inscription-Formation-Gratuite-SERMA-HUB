@@ -58,7 +58,8 @@ const slideVariants = {
   }),
 };
 
-const FEDAPAY_BASE = "https://me.fedapay.com/eUT2Wc_i";
+const FEDAPAY_1_MODULE = "https://me.fedapay.com/eUT2Wc_i";
+const FEDAPAY_2_MODULES = "https://me.fedapay.com/6b06vewQ";
 const PENDING_KEY = "serma_pending_inscription";
 const FORMATION_SESSION = "mai2026";
 
@@ -220,9 +221,10 @@ export default function MultiStepForm() {
           localStorage.setItem(PENDING_KEY, JSON.stringify(finalData));
         } catch { /* ignore */ }
 
-        // Redirect to FedaPay with return URL
+        // Redirect to FedaPay with return URL — link depends on number of modules
+        const fedapayLink = finalData.modules.length >= 2 ? FEDAPAY_2_MODULES : FEDAPAY_1_MODULE;
         const returnUrl = `${window.location.origin}/?payment=success`;
-        window.location.href = `${FEDAPAY_BASE}?redirect_url=${encodeURIComponent(returnUrl)}`;
+        window.location.href = `${fedapayLink}?redirect_url=${encodeURIComponent(returnUrl)}`;
       }
     } catch {
       setSubmitError("Erreur réseau. Veuillez réessayer.");
@@ -681,6 +683,9 @@ function Step5({
 }: StepProps & { isSubmitting: boolean; submitError: string | null }) {
   const conditionsAcceptees = watch("conditionsAcceptees");
   const presenceConfirmee = watch("presenceConfirmee");
+  const selectedModules: string[] = watch("modules") || [];
+  const moduleCount = selectedModules.length;
+  const totalPrice = moduleCount >= 2 ? "4 000" : "2 000";
 
   return (
     <div className="space-y-5 sm:space-y-6">
@@ -691,7 +696,12 @@ function Step5({
         <p className="text-orange text-xs xs:text-sm font-bold mb-1">
           Paiement requis pour valider votre place
         </p>
-        <p className="text-white text-lg xs:text-xl font-extrabold">2 000 FCFA</p>
+        <p className="text-white text-lg xs:text-xl font-extrabold">{totalPrice} FCFA</p>
+        {moduleCount >= 2 && (
+          <p className="text-orange/80 text-[10px] xs:text-xs font-medium mt-0.5">
+            2 modules × 2 000 FCFA
+          </p>
+        )}
         <p className="text-muted text-[10px] xs:text-xs mt-1">
           Le lien de paiement FedaPay vous sera affiché après envoi du formulaire.
         </p>
